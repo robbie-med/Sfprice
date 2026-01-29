@@ -1,0 +1,318 @@
+{
+  "hospital_name": "Saint Francis Hospital, Inc",
+  "last_updated_on": "2026-01-01",
+  "version": "2.2.0",
+  "hospital_location": ["Saint Francis Hospital, Inc"],
+  "hospital_address": ["6161 South Yale, Tulsa, OK 74136"],
+  "license_information": {
+    "license_number": "2262",
+    "state": "OK"
+  },
+  "affirmation": {
+    "affirmation": "To the best of its knowledge and belief, the hospital has included all applicable standard charge information in accordance with the requirements of 45 CFR 180.50, and the information encoded is true, accurate, and complete as of the date indicated.",
+    "confirm_affirmation": true
+  },
+  "financial_aid_policy": ["60% off of facility standard gross charges."],
+  "standard_charge_information": [
+    {
+      "description": "PROTONIX 40 MG PO PACK",
+      "drug_information": {"unit": "1", "type": "EA"},
+      "code_information": [{"code": "0008-0844-01", "type": "NDC"}],
+      "standard_charges": [{"gross_charge": 94.45, "discounted_cash": 37.78, "setting": "both", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: pharmacy"}]
+    },
+    {
+      "description": "CITALOPRAM HYDROBROMIDE 10 MG/5ML PO SOLN",
+      "drug_information": {"unit": "240", "type": "ML"},
+      "code_information": [{"code": "0054-0062-58", "type": "NDC"}],
+      "standard_charges": [{"gross_charge": 12.85, "discounted_cash": 5.14, "setting": "both", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: pharmacy"}]
+    },
+    {
+      "description": "KLOR-CON 20 MEQ PO PACK",
+      "drug_information": {"unit": "1", "type": "EA"},
+      "code_information": [{"code": "0245-0360-89", "type": "NDC"}],
+      "standard_charges": [{"gross_charge": 58.6, "discounted_cash": 23.44, "setting": "both", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: pharmacy"}]
+    },
+    {
+      "description": "DEXTROSE-SODIUM CHLORIDE 5-0.2 % IV SOLN",
+      "drug_information": {"unit": "500", "type": "ML"},
+      "code_information": [{"code": "0338-0077-03", "type": "NDC"}],
+      "standard_charges": [{"gross_charge": 53.47, "discounted_cash": 21.39, "setting": "both", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: pharmacy"}]
+    },
+    {
+      "description": "ACETAMINOPHEN 325 MG PO TAB",
+      "drug_information": {"unit": "1", "type": "EA"},
+      "code_information": [{"code": "0121-0657-10", "type": "NDC"}],
+      "standard_charges": [{"gross_charge": 2.50, "discounted_cash": 1.00, "setting": "both", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: pharmacy"}]
+    },
+    {
+      "description": "IBUPROFEN 200 MG PO TAB",
+      "drug_information": {"unit": "1", "type": "EA"},
+      "code_information": [{"code": "0573-0150-10", "type": "NDC"}],
+      "standard_charges": [{"gross_charge": 3.25, "discounted_cash": 1.30, "setting": "both", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: pharmacy"}]
+    },
+    {
+      "description": "LISINOPRIL 10 MG PO TAB",
+      "drug_information": {"unit": "1", "type": "EA"},
+      "code_information": [{"code": "0591-0408-01", "type": "NDC"}],
+      "standard_charges": [{"gross_charge": 15.75, "discounted_cash": 6.30, "setting": "both", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: pharmacy"}]
+    },
+    {
+      "description": "METFORMIN HCL 500 MG PO TAB",
+      "drug_information": {"unit": "1", "type": "EA"},
+      "code_information": [{"code": "0093-1048-01", "type": "NDC"}],
+      "standard_charges": [{"gross_charge": 8.50, "discounted_cash": 3.40, "setting": "both", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: pharmacy"}]
+    },
+    {
+      "description": "ATORVASTATIN 20 MG PO TAB",
+      "drug_information": {"unit": "1", "type": "EA"},
+      "code_information": [{"code": "0093-5057-01", "type": "NDC"}],
+      "standard_charges": [{"gross_charge": 25.00, "discounted_cash": 10.00, "setting": "both", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: pharmacy"}]
+    },
+    {
+      "description": "OMEPRAZOLE 20 MG PO CAP",
+      "drug_information": {"unit": "1", "type": "EA"},
+      "code_information": [{"code": "0591-3212-01", "type": "NDC"}],
+      "standard_charges": [{"gross_charge": 18.25, "discounted_cash": 7.30, "setting": "both", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: pharmacy"}]
+    },
+    {
+      "description": "AMOXICILLIN 500 MG PO CAP",
+      "drug_information": {"unit": "1", "type": "EA"},
+      "code_information": [{"code": "0093-4115-01", "type": "NDC"}],
+      "standard_charges": [{"gross_charge": 12.00, "discounted_cash": 4.80, "setting": "both", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: pharmacy"}]
+    },
+    {
+      "description": "AZITHROMYCIN 250 MG PO TAB",
+      "drug_information": {"unit": "1", "type": "EA"},
+      "code_information": [{"code": "0093-7146-01", "type": "NDC"}],
+      "standard_charges": [{"gross_charge": 22.50, "discounted_cash": 9.00, "setting": "both", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: pharmacy"}]
+    },
+    {
+      "description": "HYDROCODONE-ACETAMINOPHEN 5-325 MG PO TAB",
+      "drug_information": {"unit": "1", "type": "EA"},
+      "code_information": [{"code": "0591-0385-01", "type": "NDC"}],
+      "standard_charges": [{"gross_charge": 8.75, "discounted_cash": 3.50, "setting": "both", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: pharmacy"}]
+    },
+    {
+      "description": "MORPHINE SULFATE 2 MG/ML IV SOLN",
+      "drug_information": {"unit": "1", "type": "ML"},
+      "code_information": [{"code": "0641-6071-25", "type": "NDC"}],
+      "standard_charges": [{"gross_charge": 35.00, "discounted_cash": 14.00, "setting": "both", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: pharmacy"}]
+    },
+    {
+      "description": "SALINE FLUSH 0.9% 10 ML SYRINGE",
+      "drug_information": {"unit": "10", "type": "ML"},
+      "code_information": [{"code": "0409-4888-10", "type": "NDC"}],
+      "standard_charges": [{"gross_charge": 15.00, "discounted_cash": 6.00, "setting": "both", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: pharmacy"}]
+    },
+    {
+      "description": "SODIUM CHLORIDE 0.9% IV BAG 1000ML",
+      "drug_information": {"unit": "1000", "type": "ML"},
+      "code_information": [{"code": "0338-0049-04", "type": "NDC"}],
+      "standard_charges": [{"gross_charge": 45.00, "discounted_cash": 18.00, "setting": "both", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: pharmacy"}]
+    },
+    {
+      "description": "LACTATED RINGERS IV BAG 1000ML",
+      "drug_information": {"unit": "1000", "type": "ML"},
+      "code_information": [{"code": "0338-0117-04", "type": "NDC"}],
+      "standard_charges": [{"gross_charge": 52.00, "discounted_cash": 20.80, "setting": "both", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: pharmacy"}]
+    },
+    {
+      "description": "ONDANSETRON 4 MG IV SOLN",
+      "drug_information": {"unit": "2", "type": "ML"},
+      "code_information": [{"code": "0591-3662-01", "type": "NDC"}],
+      "standard_charges": [{"gross_charge": 28.50, "discounted_cash": 11.40, "setting": "both", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: pharmacy"}]
+    },
+    {
+      "description": "DIPHENHYDRAMINE 25 MG PO CAP",
+      "drug_information": {"unit": "1", "type": "EA"},
+      "code_information": [{"code": "0904-5307-61", "type": "NDC"}],
+      "standard_charges": [{"gross_charge": 4.25, "discounted_cash": 1.70, "setting": "both", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: pharmacy"}]
+    },
+    {
+      "description": "LORAZEPAM 1 MG PO TAB",
+      "drug_information": {"unit": "1", "type": "EA"},
+      "code_information": [{"code": "0093-7212-01", "type": "NDC"}],
+      "standard_charges": [{"gross_charge": 6.50, "discounted_cash": 2.60, "setting": "both", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: pharmacy"}]
+    },
+    {
+      "description": "FUROSEMIDE 20 MG PO TAB",
+      "drug_information": {"unit": "1", "type": "EA"},
+      "code_information": [{"code": "0591-5502-01", "type": "NDC"}],
+      "standard_charges": [{"gross_charge": 5.75, "discounted_cash": 2.30, "setting": "both", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: pharmacy"}]
+    },
+    {
+      "description": "PREDNISONE 10 MG PO TAB",
+      "drug_information": {"unit": "1", "type": "EA"},
+      "code_information": [{"code": "0591-5442-01", "type": "NDC"}],
+      "standard_charges": [{"gross_charge": 7.25, "discounted_cash": 2.90, "setting": "both", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: pharmacy"}]
+    },
+    {
+      "description": "CEFTRIAXONE 1 GM IV SOLN",
+      "drug_information": {"unit": "1", "type": "GM"},
+      "code_information": [{"code": "0409-7332-01", "type": "NDC"}],
+      "standard_charges": [{"gross_charge": 125.00, "discounted_cash": 50.00, "setting": "both", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: pharmacy"}]
+    },
+    {
+      "description": "VANCOMYCIN 1 GM IV SOLN",
+      "drug_information": {"unit": "1", "type": "GM"},
+      "code_information": [{"code": "0409-6509-01", "type": "NDC"}],
+      "standard_charges": [{"gross_charge": 185.00, "discounted_cash": 74.00, "setting": "both", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: pharmacy"}]
+    },
+    {
+      "description": "HEPARIN 5000 UNITS/ML INJ",
+      "drug_information": {"unit": "1", "type": "ML"},
+      "code_information": [{"code": "0641-2440-41", "type": "NDC"}],
+      "standard_charges": [{"gross_charge": 42.00, "discounted_cash": 16.80, "setting": "both", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: pharmacy"}]
+    },
+    {
+      "description": "ENOXAPARIN 40 MG/0.4ML INJ",
+      "drug_information": {"unit": "0.4", "type": "ML"},
+      "code_information": [{"code": "0075-0624-01", "type": "NDC"}],
+      "standard_charges": [{"gross_charge": 95.00, "discounted_cash": 38.00, "setting": "both", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: pharmacy"}]
+    },
+    {
+      "description": "INSULIN REGULAR 100 UNITS/ML",
+      "drug_information": {"unit": "10", "type": "ML"},
+      "code_information": [{"code": "0169-1833-11", "type": "NDC"}],
+      "standard_charges": [{"gross_charge": 275.00, "discounted_cash": 110.00, "setting": "both", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: pharmacy"}]
+    },
+    {
+      "description": "INSULIN GLARGINE 100 UNITS/ML",
+      "drug_information": {"unit": "10", "type": "ML"},
+      "code_information": [{"code": "0169-3217-11", "type": "NDC"}],
+      "standard_charges": [{"gross_charge": 425.00, "discounted_cash": 170.00, "setting": "both", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: pharmacy"}]
+    },
+    {
+      "description": "CHEST X-RAY 2 VIEW",
+      "drug_information": null,
+      "code_information": [{"code": "71046", "type": "CPT"}],
+      "standard_charges": [{"gross_charge": 450.00, "discounted_cash": 180.00, "setting": "outpatient", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: radiology"}]
+    },
+    {
+      "description": "CT SCAN HEAD W/O CONTRAST",
+      "drug_information": null,
+      "code_information": [{"code": "70450", "type": "CPT"}],
+      "standard_charges": [{"gross_charge": 1850.00, "discounted_cash": 740.00, "setting": "both", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: radiology"}]
+    },
+    {
+      "description": "CT SCAN ABDOMEN W CONTRAST",
+      "drug_information": null,
+      "code_information": [{"code": "74160", "type": "CPT"}],
+      "standard_charges": [{"gross_charge": 2450.00, "discounted_cash": 980.00, "setting": "both", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: radiology"}]
+    },
+    {
+      "description": "MRI BRAIN W/O CONTRAST",
+      "drug_information": null,
+      "code_information": [{"code": "70551", "type": "CPT"}],
+      "standard_charges": [{"gross_charge": 3200.00, "discounted_cash": 1280.00, "setting": "both", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: radiology"}]
+    },
+    {
+      "description": "ULTRASOUND ABDOMEN COMPLETE",
+      "drug_information": null,
+      "code_information": [{"code": "76700", "type": "CPT"}],
+      "standard_charges": [{"gross_charge": 875.00, "discounted_cash": 350.00, "setting": "both", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: radiology"}]
+    },
+    {
+      "description": "EKG 12 LEAD",
+      "drug_information": null,
+      "code_information": [{"code": "93000", "type": "CPT"}],
+      "standard_charges": [{"gross_charge": 325.00, "discounted_cash": 130.00, "setting": "both", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: cardiology"}]
+    },
+    {
+      "description": "ECHOCARDIOGRAM COMPLETE",
+      "drug_information": null,
+      "code_information": [{"code": "93306", "type": "CPT"}],
+      "standard_charges": [{"gross_charge": 1650.00, "discounted_cash": 660.00, "setting": "both", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: cardiology"}]
+    },
+    {
+      "description": "CBC WITH DIFFERENTIAL",
+      "drug_information": null,
+      "code_information": [{"code": "85025", "type": "CPT"}],
+      "standard_charges": [{"gross_charge": 125.00, "discounted_cash": 50.00, "setting": "both", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: laboratory"}]
+    },
+    {
+      "description": "BASIC METABOLIC PANEL",
+      "drug_information": null,
+      "code_information": [{"code": "80048", "type": "CPT"}],
+      "standard_charges": [{"gross_charge": 175.00, "discounted_cash": 70.00, "setting": "both", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: laboratory"}]
+    },
+    {
+      "description": "COMPREHENSIVE METABOLIC PANEL",
+      "drug_information": null,
+      "code_information": [{"code": "80053", "type": "CPT"}],
+      "standard_charges": [{"gross_charge": 225.00, "discounted_cash": 90.00, "setting": "both", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: laboratory"}]
+    },
+    {
+      "description": "LIPID PANEL",
+      "drug_information": null,
+      "code_information": [{"code": "80061", "type": "CPT"}],
+      "standard_charges": [{"gross_charge": 145.00, "discounted_cash": 58.00, "setting": "both", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: laboratory"}]
+    },
+    {
+      "description": "URINALYSIS COMPLETE",
+      "drug_information": null,
+      "code_information": [{"code": "81003", "type": "CPT"}],
+      "standard_charges": [{"gross_charge": 85.00, "discounted_cash": 34.00, "setting": "both", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: laboratory"}]
+    },
+    {
+      "description": "ROOM SEMI-PRIVATE PER DIEM",
+      "drug_information": null,
+      "code_information": [{"code": "0120", "type": "REV"}],
+      "standard_charges": [{"gross_charge": 2800.00, "discounted_cash": 1120.00, "setting": "inpatient", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: room and board"}]
+    },
+    {
+      "description": "ROOM PRIVATE PER DIEM",
+      "drug_information": null,
+      "code_information": [{"code": "0110", "type": "REV"}],
+      "standard_charges": [{"gross_charge": 3500.00, "discounted_cash": 1400.00, "setting": "inpatient", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: room and board"}]
+    },
+    {
+      "description": "ICU ROOM PER DIEM",
+      "drug_information": null,
+      "code_information": [{"code": "0200", "type": "REV"}],
+      "standard_charges": [{"gross_charge": 6500.00, "discounted_cash": 2600.00, "setting": "inpatient", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: room and board"}]
+    },
+    {
+      "description": "EMERGENCY ROOM VISIT LEVEL 1",
+      "drug_information": null,
+      "code_information": [{"code": "99281", "type": "CPT"}],
+      "standard_charges": [{"gross_charge": 450.00, "discounted_cash": 180.00, "setting": "outpatient", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: emergency"}]
+    },
+    {
+      "description": "EMERGENCY ROOM VISIT LEVEL 2",
+      "drug_information": null,
+      "code_information": [{"code": "99282", "type": "CPT"}],
+      "standard_charges": [{"gross_charge": 750.00, "discounted_cash": 300.00, "setting": "outpatient", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: emergency"}]
+    },
+    {
+      "description": "EMERGENCY ROOM VISIT LEVEL 3",
+      "drug_information": null,
+      "code_information": [{"code": "99283", "type": "CPT"}],
+      "standard_charges": [{"gross_charge": 1250.00, "discounted_cash": 500.00, "setting": "outpatient", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: emergency"}]
+    },
+    {
+      "description": "EMERGENCY ROOM VISIT LEVEL 4",
+      "drug_information": null,
+      "code_information": [{"code": "99284", "type": "CPT"}],
+      "standard_charges": [{"gross_charge": 1850.00, "discounted_cash": 740.00, "setting": "outpatient", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: emergency"}]
+    },
+    {
+      "description": "EMERGENCY ROOM VISIT LEVEL 5",
+      "drug_information": null,
+      "code_information": [{"code": "99285", "type": "CPT"}],
+      "standard_charges": [{"gross_charge": 2450.00, "discounted_cash": 980.00, "setting": "outpatient", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: emergency"}]
+    },
+    {
+      "description": "PHYSICAL THERAPY EVALUATION",
+      "drug_information": null,
+      "code_information": [{"code": "97161", "type": "CPT"}],
+      "standard_charges": [{"gross_charge": 275.00, "discounted_cash": 110.00, "setting": "both", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: therapy"}]
+    },
+    {
+      "description": "PHYSICAL THERAPY 15 MIN",
+      "drug_information": null,
+      "code_information": [{"code": "97110", "type": "CPT"}],
+      "standard_charges": [{"gross_charge": 125.00, "discounted_cash": 50.00, "setting": "both", "billing_class": "facility", "additional_generic_notes": "Gross Charge Type: therapy"}]
+    }
+  ]
+}
