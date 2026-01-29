@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Cost Itemizer</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Hospital Cost Itemizer</h1>
+            <div id="hospital-info" class="hospital-info"></div>
+        </header>
+
+        <main>
+            <section class="search-section">
+                <h2>Search Hospital Charges</h2>
+                <div class="search-controls">
+                    <input
+                        type="text"
+                        id="search-input"
+                        placeholder="Search by description or code..."
+                        autocomplete="off"
+                    >
+                    <select id="price-type">
+                        <option value="gross_charge">Gross Charge</option>
+                        <option value="discounted_cash">Discounted Cash</option>
+                    </select>
+                </div>
+                <div id="search-results" class="search-results"></div>
+            </section>
+
+            <section class="cart-section">
+                <h2>Your Itemized List</h2>
+                <div id="cart-items" class="cart-items">
+                    <p class="empty-cart">No items added yet. Search and add items above.</p>
+                </div>
+                <div class="cart-summary">
+                    <div class="summary-row">
+                        <span>Subtotal:</span>
+                        <span id="subtotal">$0.00</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total:</span>
+                        <span id="total">$0.00</span>
+                    </div>
+                    <button id="clear-cart" class="btn btn-secondary">Clear All</button>
+                    <button id="print-list" class="btn btn-primary">Print List</button>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Data last updated: <span id="last-updated">-</span></p>
+            <p class="disclaimer">This tool is for informational purposes only. Actual charges may vary.</p>
+        </footer>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
