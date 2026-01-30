@@ -1,6 +1,7 @@
 # Hospital Cost Itemizer
 
 A static website for searching and itemizing hospital costs. Users can search through hospital charges, add items to a list, and see itemized costs with totals.
+<img width="1191" height="881" alt="sf" src="https://github.com/user-attachments/assets/feac62cf-de56-4d9a-946f-ba62cdf7c622" />
 
 ## Features
 
