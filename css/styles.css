@@ -10,8 +10,10 @@
     --secondary-color: #64748b;
     --success-color: #22c55e;
     --danger-color: #ef4444;
+    --warning-color: #f59e0b;
     --background: #f8fafc;
     --surface: #ffffff;
+    --surface-alt: #f1f5f9;
     --text-primary: #1e293b;
     --text-secondary: #64748b;
     --border-color: #e2e8f0;
@@ -19,11 +21,28 @@
     --shadow-lg: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
+/* Dark mode variables */
+[data-theme="dark"] {
+    --primary-color: #3b82f6;
+    --primary-hover: #60a5fa;
+    --secondary-color: #94a3b8;
+    --success-color: #4ade80;
+    --danger-color: #f87171;
+    --warning-color: #fbbf24;
+    --background: #0f172a;
+    --surface: #1e293b;
+    --surface-alt: #334155;
+    --text-primary: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --border-color: #475569;
+}
+
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
     background-color: var(--background);
     color: var(--text-primary);
     line-height: 1.6;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .container {
@@ -33,23 +52,61 @@ body {
 }
 
 header {
-    text-align: center;
     margin-bottom: 30px;
     padding: 20px;
     background: var(--surface);
     border-radius: 12px;
     box-shadow: var(--shadow);
+    transition: background-color 0.3s;
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
 header h1 {
     color: var(--primary-color);
     font-size: 2rem;
-    margin-bottom: 10px;
+}
+
+.btn-icon {
+    background: var(--surface-alt);
+    border: 1px solid var(--border-color);
+    padding: 8px 12px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+}
+
+.btn-icon:hover {
+    background: var(--border-color);
+}
+
+/* Dark mode toggle icons */
+.icon-sun {
+    display: none;
+}
+
+.icon-moon {
+    display: inline;
+}
+
+[data-theme="dark"] .icon-sun {
+    display: inline;
+}
+
+[data-theme="dark"] .icon-moon {
+    display: none;
 }
 
 .hospital-info {
     color: var(--text-secondary);
     font-size: 0.9rem;
+    text-align: center;
 }
 
 .hospital-info p {
@@ -73,6 +130,7 @@ section {
     border-radius: 12px;
     padding: 20px;
     box-shadow: var(--shadow);
+    transition: background-color 0.3s;
 }
 
 section h2 {
@@ -87,20 +145,28 @@ section h2 {
     display: flex;
     gap: 10px;
     margin-bottom: 15px;
+    flex-wrap: wrap;
 }
 
 #search-input {
     flex: 1;
+    min-width: 200px;
     padding: 12px 16px;
     border: 2px solid var(--border-color);
     border-radius: 8px;
     font-size: 1rem;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, background-color 0.3s;
+    background: var(--surface);
+    color: var(--text-primary);
 }
 
 #search-input:focus {
     outline: none;
     border-color: var(--primary-color);
+}
+
+#search-input::placeholder {
+    color: var(--text-secondary);
 }
 
 #price-type {
@@ -109,7 +175,9 @@ section h2 {
     border-radius: 8px;
     font-size: 1rem;
     background: var(--surface);
+    color: var(--text-primary);
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .search-results {
@@ -120,7 +188,7 @@ section h2 {
 .search-result-item {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     padding: 12px;
     border: 1px solid var(--border-color);
     border-radius: 8px;
@@ -129,11 +197,12 @@ section h2 {
 }
 
 .search-result-item:hover {
-    background-color: #f1f5f9;
+    background-color: var(--surface-alt);
 }
 
 .item-info {
     flex: 1;
+    min-width: 0;
 }
 
 .item-description {
@@ -143,21 +212,101 @@ section h2 {
 }
 
 .item-code {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     color: var(--text-secondary);
+    margin-bottom: 4px;
 }
 
 .item-drug-info {
     font-size: 0.8rem;
     color: var(--text-secondary);
     font-style: italic;
+    margin-bottom: 4px;
+}
+
+/* Standardized drug info styling */
+.item-dose-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 6px;
+}
+
+.dose-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 500;
+}
+
+.dose-badge.strength {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.dose-badge.route {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.dose-badge.form {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.dose-badge.unit-price {
+    background: #f3e8ff;
+    color: #7c3aed;
+}
+
+.dose-badge.package {
+    background: #e0e7ff;
+    color: #4338ca;
+}
+
+[data-theme="dark"] .dose-badge.strength {
+    background: #1e3a5f;
+    color: #93c5fd;
+}
+
+[data-theme="dark"] .dose-badge.route {
+    background: #14532d;
+    color: #86efac;
+}
+
+[data-theme="dark"] .dose-badge.form {
+    background: #78350f;
+    color: #fde68a;
+}
+
+[data-theme="dark"] .dose-badge.unit-price {
+    background: #4c1d95;
+    color: #c4b5fd;
+}
+
+[data-theme="dark"] .dose-badge.package {
+    background: #312e81;
+    color: #a5b4fc;
+}
+
+.item-price-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin: 0 10px;
 }
 
 .item-price {
     font-weight: 600;
     color: var(--primary-color);
     font-size: 1.1rem;
-    margin: 0 15px;
+    white-space: nowrap;
+}
+
+.item-unit-price {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
     white-space: nowrap;
 }
 
@@ -220,6 +369,7 @@ section h2 {
     background-color: var(--success-color);
     color: white;
     min-width: 70px;
+    align-self: center;
 }
 
 .cart-items {
@@ -244,17 +394,20 @@ section h2 {
     border: 1px solid var(--border-color);
     border-radius: 8px;
     margin-bottom: 8px;
-    background: #f8fafc;
+    background: var(--surface-alt);
+    transition: background-color 0.3s;
 }
 
 .cart-item-info {
     flex: 1;
+    min-width: 0;
 }
 
 .cart-item-description {
     font-weight: 500;
     margin-bottom: 2px;
     font-size: 0.95rem;
+    word-break: break-word;
 }
 
 .cart-item-code {
@@ -262,10 +415,17 @@ section h2 {
     color: var(--text-secondary);
 }
 
+.cart-item-dose {
+    font-size: 0.75rem;
+    color: var(--primary-color);
+    margin-top: 2px;
+}
+
 .cart-item-controls {
     display: flex;
     align-items: center;
     gap: 10px;
+    flex-shrink: 0;
 }
 
 .quantity-control {
@@ -279,12 +439,14 @@ section h2 {
     height: 28px;
     border: 1px solid var(--border-color);
     background: var(--surface);
+    color: var(--text-primary);
     border-radius: 4px;
     cursor: pointer;
     font-size: 1rem;
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: background-color 0.2s;
 }
 
 .quantity-control button:hover {
@@ -385,12 +547,80 @@ footer {
     margin-bottom: 10px;
 }
 
+/* Item type badges */
+.item-type-badge {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-right: 6px;
+    vertical-align: middle;
+}
+
+.item-type-badge.pharmacy {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.item-type-badge.procedure {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.item-type-badge.room {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.item-type-badge.supply {
+    background: #f3e8ff;
+    color: #7c3aed;
+}
+
+.item-type-badge.other {
+    background: #e5e7eb;
+    color: #374151;
+}
+
+[data-theme="dark"] .item-type-badge.pharmacy {
+    background: #78350f;
+    color: #fde68a;
+}
+
+[data-theme="dark"] .item-type-badge.procedure {
+    background: #1e3a5f;
+    color: #93c5fd;
+}
+
+[data-theme="dark"] .item-type-badge.room {
+    background: #14532d;
+    color: #86efac;
+}
+
+[data-theme="dark"] .item-type-badge.supply {
+    background: #4c1d95;
+    color: #c4b5fd;
+}
+
+[data-theme="dark"] .item-type-badge.other {
+    background: #374151;
+    color: #d1d5db;
+}
+
 /* Print styles */
 @media print {
     .search-section,
     .btn,
-    .quantity-control button {
+    .quantity-control button,
+    #dark-mode-toggle {
         display: none;
+    }
+
+    body {
+        background: white;
+        color: black;
     }
 
     .container {
@@ -400,10 +630,16 @@ footer {
     .cart-section {
         box-shadow: none;
         border: 1px solid #000;
+        background: white;
     }
 
     .cart-item {
         border-color: #000;
+        background: #f5f5f5;
+    }
+
+    header {
+        background: white;
     }
 }
 
