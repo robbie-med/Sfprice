@@ -1,11 +1,185 @@
 // Hospital Cost Itemizer Application
 
+class DrugParser {
+    // Common route abbreviations
+    static ROUTES = {
+        'PO': 'Oral',
+        'IV': 'Intravenous',
+        'IM': 'Intramuscular',
+        'SC': 'Subcutaneous',
+        'SQ': 'Subcutaneous',
+        'TD': 'Transdermal',
+        'TOP': 'Topical',
+        'PR': 'Rectal',
+        'SL': 'Sublingual',
+        'INH': 'Inhalation',
+        'NA': 'Nasal',
+        'OP': 'Ophthalmic',
+        'OT': 'Otic',
+        'VAG': 'Vaginal',
+        'EX': 'External',
+        'RE': 'Rectal'
+    };
+
+    // Common form abbreviations
+    static FORMS = {
+        'SOLN': 'Solution',
+        'SOLR': 'Solution for Reconstitution',
+        'SOSY': 'Solution/Syrup',
+        'SUSP': 'Suspension',
+        'TABS': 'Tablet',
+        'TAB': 'Tablet',
+        'TBEC': 'Enteric Coated Tablet',
+        'TBDP': 'Disintegrating Tablet',
+        'CAPS': 'Capsule',
+        'CAP': 'Capsule',
+        'CPEP': 'Capsule Extended Release',
+        'CREA': 'Cream',
+        'OINT': 'Ointment',
+        'NEBU': 'Nebulizer Solution',
+        'INJ': 'Injection',
+        'PACK': 'Packet',
+        'SUPP': 'Suppository',
+        'GEL': 'Gel',
+        'LOTN': 'Lotion',
+        'PWDR': 'Powder',
+        'AERO': 'Aerosol',
+        'SOSY': 'Syrup'
+    };
+
+    // Parse drug description to extract components
+    static parse(description) {
+        if (!description) return null;
+
+        const result = {
+            name: '',
+            strength: null,
+            strengthUnit: null,
+            concentration: null,
+            route: null,
+            routeFull: null,
+            form: null,
+            formFull: null,
+            isConcentration: false
+        };
+
+        // Clean up description
+        let desc = description.toUpperCase().trim();
+
+        // Extract form (usually at the end)
+        for (const [abbr, full] of Object.entries(this.FORMS)) {
+            const formRegex = new RegExp(`\\b${abbr}\\b`, 'i');
+            if (formRegex.test(desc)) {
+                result.form = abbr;
+                result.formFull = full;
+                break;
+            }
+        }
+
+        // Extract route
+        for (const [abbr, full] of Object.entries(this.ROUTES)) {
+            const routeRegex = new RegExp(`\\b${abbr}\\b`, 'i');
+            if (routeRegex.test(desc)) {
+                result.route = abbr;
+                result.routeFull = full;
+                break;
+            }
+        }
+
+        // Extract concentration (e.g., "10 MG/ML", "325 MG/10.15ML", "0.025 MG/24HR")
+        const concentrationMatch = desc.match(/(\d+\.?\d*)\s*(MG|MCG|G|MEQ|UNITS?|INT'?L?\s*UNITS?)\s*\/\s*(\d*\.?\d*)\s*(ML|L|HR|24HR|ACT|DOSE)?/i);
+        if (concentrationMatch) {
+            const amount = parseFloat(concentrationMatch[1]);
+            const unit = concentrationMatch[2].replace(/INT'?L?\s*/i, '').toUpperCase();
+            const perAmount = concentrationMatch[3] ? parseFloat(concentrationMatch[3]) : 1;
+            const perUnit = (concentrationMatch[4] || 'ML').toUpperCase();
+
+            result.concentration = `${amount} ${unit}/${perAmount > 1 ? perAmount : ''}${perUnit}`;
+            result.strength = amount;
+            result.strengthUnit = unit;
+            result.isConcentration = true;
+            result.perAmount = perAmount;
+            result.perUnit = perUnit;
+        } else {
+            // Extract simple strength (e.g., "500 MG", "25 MCG", "20 MEQ")
+            const strengthMatch = desc.match(/(\d+\.?\d*)\s*(MG|MCG|G|MEQ|UNITS?|%)/i);
+            if (strengthMatch) {
+                result.strength = parseFloat(strengthMatch[1]);
+                result.strengthUnit = strengthMatch[2].toUpperCase();
+            }
+        }
+
+        // Extract drug name (everything before the first number usually)
+        const nameMatch = desc.match(/^([A-Z][A-Z\s\-]+?)(?:\s+\d|$)/);
+        if (nameMatch) {
+            result.name = nameMatch[1].trim();
+        } else {
+            result.name = desc.split(/\s+/).slice(0, 2).join(' ');
+        }
+
+        return result;
+    }
+
+    // Calculate standardized price per unit
+    static calculateUnitPrice(item, price) {
+        const drugInfo = item.drug_information;
+        const parsed = this.parse(item.description);
+
+        if (!drugInfo || !price) return null;
+
+        const packageQty = parseFloat(drugInfo.unit) || 1;
+        const packageType = drugInfo.type || 'EA';
+
+        // Price per package unit (EA, ML, etc.)
+        const pricePerPackageUnit = price / packageQty;
+
+        // If we have concentration info, calculate price per mg/mcg
+        if (parsed && parsed.isConcentration && parsed.strength) {
+            // For solutions: price per ML, and calculate per MG
+            if (packageType === 'ML' || packageType === 'L') {
+                const mlQty = packageType === 'L' ? packageQty * 1000 : packageQty;
+                const mgPerMl = parsed.strength / (parsed.perAmount || 1);
+                const totalMg = mgPerMl * mlQty;
+
+                return {
+                    pricePerMl: price / mlQty,
+                    pricePerMg: totalMg > 0 ? price / totalMg : null,
+                    totalDose: totalMg,
+                    doseUnit: parsed.strengthUnit,
+                    packageInfo: `${packageQty} ${packageType}`,
+                    concentration: parsed.concentration
+                };
+            }
+        }
+
+        // For tablets/capsules with strength
+        if (parsed && parsed.strength && (packageType === 'EA' || parsed.form === 'TABS' || parsed.form === 'CAPS')) {
+            const totalDose = parsed.strength * packageQty;
+            return {
+                pricePerUnit: pricePerPackageUnit,
+                pricePerMg: totalDose > 0 ? price / totalDose : null,
+                totalDose: totalDose,
+                doseUnit: parsed.strengthUnit,
+                packageInfo: `${packageQty} ${parsed.formFull || packageType}`,
+                strengthPerUnit: `${parsed.strength} ${parsed.strengthUnit}`
+            };
+        }
+
+        // Default: just return price per package unit
+        return {
+            pricePerUnit: pricePerPackageUnit,
+            packageInfo: `${packageQty} ${packageType}`
+        };
+    }
+}
+
 class HospitalCostItemizer {
     constructor() {
         this.data = null;
         this.cart = [];
         this.priceType = 'gross_charge';
         this.searchTimeout = null;
+        this.darkMode = false;
 
         this.init();
     }
@@ -13,6 +187,7 @@ class HospitalCostItemizer {
     async init() {
         this.bindElements();
         this.bindEvents();
+        this.loadTheme();
         await this.loadData();
         this.loadCartFromStorage();
         this.updateCartDisplay();
@@ -29,6 +204,7 @@ class HospitalCostItemizer {
         this.printListBtn = document.getElementById('print-list');
         this.hospitalInfo = document.getElementById('hospital-info');
         this.lastUpdated = document.getElementById('last-updated');
+        this.darkModeToggle = document.getElementById('dark-mode-toggle');
     }
 
     bindEvents() {
@@ -40,6 +216,35 @@ class HospitalCostItemizer {
         });
         this.clearCartBtn.addEventListener('click', () => this.clearCart());
         this.printListBtn.addEventListener('click', () => this.printList());
+        this.darkModeToggle.addEventListener('click', () => this.toggleDarkMode());
+    }
+
+    // Dark mode functionality
+    loadTheme() {
+        const savedTheme = localStorage.getItem('hospitalTheme');
+        if (savedTheme === 'dark') {
+            this.darkMode = true;
+            document.documentElement.setAttribute('data-theme', 'dark');
+        } else if (savedTheme === 'light') {
+            this.darkMode = false;
+        } else {
+            // Check system preference
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                this.darkMode = true;
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        }
+    }
+
+    toggleDarkMode() {
+        this.darkMode = !this.darkMode;
+        if (this.darkMode) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('hospitalTheme', 'dark');
+        } else {
+            document.documentElement.removeAttribute('data-theme');
+            localStorage.setItem('hospitalTheme', 'light');
+        }
     }
 
     async loadData() {
@@ -105,9 +310,31 @@ class HospitalCostItemizer {
                 .join(' ');
 
             return description.includes(query) || codes.includes(query);
-        }).slice(0, 50); // Limit to 50 results for performance
+        }).slice(0, 100); // Limit to 100 results for performance
 
         this.displaySearchResults(results);
+    }
+
+    getItemType(item) {
+        const notes = item.standard_charges?.[0]?.additional_generic_notes || '';
+        const codes = item.code_information || [];
+        const hasNDC = codes.some(c => c.type === 'NDC');
+        const hasCPT = codes.some(c => c.type === 'CPT' || c.type === 'HCPCS');
+        const hasRC = codes.some(c => c.type === 'RC');
+
+        if (notes.toLowerCase().includes('pharmacy') || hasNDC || item.drug_information) {
+            return { type: 'pharmacy', label: 'Rx' };
+        }
+        if (notes.toLowerCase().includes('room') || item.description?.toLowerCase().includes('room')) {
+            return { type: 'room', label: 'Room' };
+        }
+        if (hasCPT) {
+            return { type: 'procedure', label: 'Proc' };
+        }
+        if (notes.toLowerCase().includes('supply') || hasRC) {
+            return { type: 'supply', label: 'Supply' };
+        }
+        return { type: 'other', label: 'Other' };
     }
 
     displaySearchResults(results) {
@@ -119,17 +346,36 @@ class HospitalCostItemizer {
         const resultsHtml = results.map((item, index) => {
             const price = this.getItemPrice(item);
             const codeInfo = this.getCodeInfo(item);
-            const drugInfo = this.getDrugInfo(item);
+            const drugInfo = this.getDrugInfoDisplay(item, price);
             const uniqueId = this.generateItemId(item);
+            const itemType = this.getItemType(item);
+            const unitPriceInfo = DrugParser.calculateUnitPrice(item, price);
+
+            let unitPriceHtml = '';
+            if (unitPriceInfo) {
+                if (unitPriceInfo.pricePerMg !== null && unitPriceInfo.pricePerMg !== undefined) {
+                    unitPriceHtml = `<div class="item-unit-price">${this.formatCurrency(unitPriceInfo.pricePerMg)}/mg</div>`;
+                } else if (unitPriceInfo.pricePerMl !== null && unitPriceInfo.pricePerMl !== undefined) {
+                    unitPriceHtml = `<div class="item-unit-price">${this.formatCurrency(unitPriceInfo.pricePerMl)}/mL</div>`;
+                } else if (unitPriceInfo.pricePerUnit !== null && unitPriceInfo.pricePerUnit !== undefined) {
+                    unitPriceHtml = `<div class="item-unit-price">${this.formatCurrency(unitPriceInfo.pricePerUnit)}/ea</div>`;
+                }
+            }
 
             return `
                 <div class="search-result-item" data-index="${index}">
                     <div class="item-info">
-                        <div class="item-description">${this.escapeHtml(item.description)}</div>
+                        <div class="item-description">
+                            <span class="item-type-badge ${itemType.type}">${itemType.label}</span>
+                            ${this.escapeHtml(item.description)}
+                        </div>
                         ${codeInfo ? `<div class="item-code">${codeInfo}</div>` : ''}
-                        ${drugInfo ? `<div class="item-drug-info">${drugInfo}</div>` : ''}
+                        ${drugInfo}
                     </div>
-                    <div class="item-price">${this.formatCurrency(price)}</div>
+                    <div class="item-price-container">
+                        <div class="item-price">${this.formatCurrency(price)}</div>
+                        ${unitPriceHtml}
+                    </div>
                     <button class="btn btn-add" onclick="app.addToCart('${uniqueId}')">Add</button>
                 </div>
             `;
@@ -144,18 +390,75 @@ class HospitalCostItemizer {
         this.currentResults = results;
     }
 
+    getDrugInfoDisplay(item, price) {
+        const parsed = DrugParser.parse(item.description);
+        const drugInfo = item.drug_information;
+        const unitPriceInfo = DrugParser.calculateUnitPrice(item, price);
+
+        if (!parsed && !drugInfo) return '';
+
+        let badges = [];
+
+        // Strength/Concentration
+        if (parsed?.concentration) {
+            badges.push(`<span class="dose-badge strength">${parsed.concentration}</span>`);
+        } else if (parsed?.strength && parsed?.strengthUnit) {
+            badges.push(`<span class="dose-badge strength">${parsed.strength} ${parsed.strengthUnit}</span>`);
+        }
+
+        // Route
+        if (parsed?.routeFull) {
+            badges.push(`<span class="dose-badge route">${parsed.routeFull}</span>`);
+        }
+
+        // Form
+        if (parsed?.formFull) {
+            badges.push(`<span class="dose-badge form">${parsed.formFull}</span>`);
+        }
+
+        // Package info
+        if (drugInfo?.unit && drugInfo?.type) {
+            badges.push(`<span class="dose-badge package">${drugInfo.unit} ${drugInfo.type}</span>`);
+        }
+
+        // Total dose in package
+        if (unitPriceInfo?.totalDose && unitPriceInfo?.doseUnit) {
+            badges.push(`<span class="dose-badge unit-price">Total: ${unitPriceInfo.totalDose.toFixed(1)} ${unitPriceInfo.doseUnit}</span>`);
+        }
+
+        if (badges.length === 0) return '';
+
+        return `<div class="item-dose-info">${badges.join('')}</div>`;
+    }
+
     getItemPrice(item) {
         if (!item.standard_charges || item.standard_charges.length === 0) {
             return 0;
         }
-        return item.standard_charges[0][this.priceType] || 0;
+        const charge = item.standard_charges[0];
+
+        // Handle different price structures
+        if (this.priceType === 'gross_charge') {
+            return charge.gross_charge || charge.minimum || 0;
+        } else {
+            return charge.discounted_cash || charge.gross_charge * 0.4 || 0;
+        }
     }
 
     getCodeInfo(item) {
         if (!item.code_information || item.code_information.length === 0) {
             return '';
         }
-        return item.code_information
+        // Show most relevant codes (NDC for drugs, CPT/HCPCS for procedures)
+        const priorityTypes = ['NDC', 'CPT', 'HCPCS', 'CDM', 'RC'];
+        const sortedCodes = [...item.code_information].sort((a, b) => {
+            const aIdx = priorityTypes.indexOf(a.type);
+            const bIdx = priorityTypes.indexOf(b.type);
+            return (aIdx === -1 ? 999 : aIdx) - (bIdx === -1 ? 999 : bIdx);
+        });
+
+        return sortedCodes
+            .slice(0, 2) // Show max 2 codes
             .map(c => `${c.type}: ${c.code}`)
             .join(' | ');
     }
@@ -175,7 +478,7 @@ class HospitalCostItemizer {
         // Generate a unique ID based on description and code
         const desc = item.description || '';
         const code = item.code_information?.[0]?.code || '';
-        return btoa(encodeURIComponent(desc + code)).replace(/[^a-zA-Z0-9]/g, '');
+        return btoa(encodeURIComponent(desc + code)).replace(/[^a-zA-Z0-9]/g, '').substring(0, 32);
     }
 
     addToCart(uniqueId) {
@@ -243,12 +546,25 @@ class HospitalCostItemizer {
             subtotal += lineTotal;
 
             const codeInfo = this.getCodeInfo(cartItem.item);
+            const parsed = DrugParser.parse(cartItem.item.description);
+            const drugInfo = cartItem.item.drug_information;
+
+            let doseInfo = '';
+            if (parsed?.strength && parsed?.strengthUnit) {
+                doseInfo = `${parsed.strength} ${parsed.strengthUnit}`;
+                if (drugInfo?.unit && drugInfo?.type) {
+                    doseInfo += ` × ${drugInfo.unit} ${drugInfo.type}`;
+                }
+            } else if (drugInfo?.unit && drugInfo?.type) {
+                doseInfo = `${drugInfo.unit} ${drugInfo.type}`;
+            }
 
             return `
                 <div class="cart-item">
                     <div class="cart-item-info">
                         <div class="cart-item-description">${this.escapeHtml(cartItem.item.description)}</div>
                         ${codeInfo ? `<div class="cart-item-code">${codeInfo}</div>` : ''}
+                        ${doseInfo ? `<div class="cart-item-dose">${doseInfo}</div>` : ''}
                     </div>
                     <div class="cart-item-controls">
                         <div class="quantity-control">
@@ -271,7 +587,9 @@ class HospitalCostItemizer {
     formatCurrency(amount) {
         return new Intl.NumberFormat('en-US', {
             style: 'currency',
-            currency: 'USD'
+            currency: 'USD',
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
         }).format(amount);
     }
 
